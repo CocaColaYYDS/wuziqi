@@ -51,9 +51,13 @@ public class Ai{
         for(int i=1;i<=15;++i)
             for(int j=1;j<=15;++j)
                 chessBoard[i][j]=0;
-        // ai先手
+
+        // TODO：ai先手，如果ai后手注释掉
         g.fillOval(337,337,45,45);
         chessBoard[8][8]=1;
+
+
+
         for(int i=0;i<8;++i)
             if(1<=8+dc[i] && 8+dc[i]<=size && 1<=8+dr[i] && 8+dr[i]<=size){
                 Point now=new Point(8+dc[i],8+dr[i]);
