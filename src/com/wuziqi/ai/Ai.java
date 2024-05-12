@@ -1,6 +1,6 @@
-package com.rockzhai.ai;
+package com.wuziqi.ai;
 /**
- * AIËã·¨ºÍÖ÷º¯ÊýÈë¿Ú
+ * AIï¿½ã·¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  */
 import java.util.*;  
 import java.awt.*;  
@@ -11,15 +11,15 @@ public class Ai{
 	//
     private static DrawingPanel panel=new DrawingPanel(700,700);  
     private static Graphics g=panel.getGraphics();  
-    public static boolean isBlack=false;//±êÖ¾Æå×ÓµÄÑÕÉ«  
-    public static int[][] chessBoard=new int[17][17]; //ÆåÅÌÆå×ÓµÄ°Ú·ÅÇé¿ö£º0ÎÞ×Ó£¬1ºÚ×Ó£¬£­1°××Ó  
-    private static HashSet<Point> toJudge=new HashSet<Point>(); // ai¿ÉÄÜ»áÏÂÆåµÄµã  
-    private static int dr[]=new int[]{-1,1,-1,1,0,0,-1,1}; // ·½ÏòÏòÁ¿  
-    private static int dc[]=new int[]{1,-1,-1,1,-1,1,0,0}; //·½ÏòÏòÁ¿  
+    public static boolean isBlack=false;//ï¿½ï¿½Ö¾ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½É«  
+    public static int[][] chessBoard=new int[17][17]; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÓµÄ°Ú·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½0ï¿½ï¿½ï¿½Ó£ï¿½1ï¿½ï¿½ï¿½Ó£ï¿½ï¿½ï¿½1ï¿½ï¿½ï¿½ï¿½  
+    private static HashSet<Point> toJudge=new HashSet<Point>(); // aiï¿½ï¿½ï¿½Ü»ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½  
+    private static int dr[]=new int[]{-1,1,-1,1,0,0,-1,1}; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
+    private static int dc[]=new int[]{1,-1,-1,1,-1,1,0,0}; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
     public static final int MAXN=1<<28;  
     public static final int MINN=-MAXN;    
-    private static int searchDeep=4;    //ËÑË÷Éî¶È  
-    private static final int size=15;   //ÆåÅÌ´óÐ¡  
+    private static int searchDeep=4;    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
+    private static final int size=15;   //ï¿½ï¿½ï¿½Ì´ï¿½Ð¡  
     public static boolean isFinished=false;  
   
     public static void main(String[] args){  
@@ -28,7 +28,7 @@ public class Ai{
         initChessBoard();  
     }  
   
-    // ³õÊ¼»¯º¯Êý£¬»æÍ¼  
+    // ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼  
     public static void initChessBoard(){  
   
         isBlack=false;  
@@ -40,18 +40,18 @@ public class Ai{
             g.drawLine(45,i,675,i);  
             g.drawLine(i,45,i,675);  
         }  
-        // ÆåÅÌÉÏµÄÎå¸ö¶¨Î»»ù±¾µã£¬Í¼ÖÐµÄÐ¡Ô²È¦  
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½ã£¬Í¼ï¿½Ðµï¿½Ð¡Ô²È¦  
         g.setColor(Color.BLACK);  
         g.fillOval(353,353,14,14);  
         g.fillOval(218,218,14,14);  
         g.fillOval(488,218,14,14);  
         g.fillOval(488,488,14,14);  
         g.fillOval(218,488,14,14);  
-        // ³õÊ¼»¯ÆåÅÌ  
+        // ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
         for(int i=1;i<=15;++i)  
             for(int j=1;j<=15;++j)  
                 chessBoard[i][j]=0;  
-        // aiÏÈÊÖ  
+        // aiï¿½ï¿½ï¿½ï¿½  
         g.fillOval(337,337,45,45);  
         chessBoard[8][8]=1;  
         for(int i=0;i<8;++i)  
@@ -63,7 +63,7 @@ public class Ai{
         isBlack=false;  
     }  
   
-    // Í¨¹ýµã»÷ÊÂ¼þ£¬µÃµ½Æå×ÓÎ»ÖÃ½øÐÐÏÂÆå  
+    // Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½Ã½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
     public static void putChess(int x,int y){  
         if(isBlack)  
             g.setColor(Color.BLACK);  
@@ -72,7 +72,7 @@ public class Ai{
         g.fillOval(x-22,y-22,45,45);  
         chessBoard[y/45][x/45]=isBlack?1:-1;  
         if(isEnd(x/45,y/45)){  
-            String s=Ai.isBlack?"ºÚ×ÓÊ¤":"°××ÓÊ¤";  
+            String s=Ai.isBlack?"ï¿½ï¿½ï¿½ï¿½Ê¤":"ï¿½ï¿½ï¿½ï¿½Ê¤";  
             JOptionPane.showMessageDialog(null,s);  
             isBlack=true;  
             initChessBoard();  
@@ -89,7 +89,7 @@ public class Ai{
         }  
     }  
   
-    // ai²©ÞÄÈë¿Úº¯Êý  
+    // aiï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Úºï¿½ï¿½ï¿½  
     public static void myAI(){  
         Node node=new Node();  
         dfs(0,node,MINN,MAXN,null);  
@@ -127,7 +127,7 @@ public class Ai{
                 return;  
             }  
   
-            boolean flags[]=new boolean[8]; //±ê¼Ç»ØËÝÊ±Òª²»ÒªÉ¾µô  
+            boolean flags[]=new boolean[8]; //ï¿½ï¿½Ç»ï¿½ï¿½ï¿½Ê±Òªï¿½ï¿½ÒªÉ¾ï¿½ï¿½  
             Arrays.fill(flags,true);  
             for(int i=0;i<8;++i){  
                 Point next=new Point(now.x+dc[i],now.y+dr[i]);  
@@ -148,8 +148,8 @@ public class Ai{
             for(int i=0;i<8;++i)  
                 if(flags[i])  
                     toJudge.remove(new Point(now.x+dc[i],now.y+dr[i]));  
-            // alpha beta¼ôÖ¦  
-            // min²ã  
+            // alpha betaï¿½ï¿½Ö¦  
+            // minï¿½ï¿½  
             if((deep&1)==1){  
                 if(root.bestChild==null || root.getLastChild().mark<root.bestChild.mark){  
                     root.bestChild=root.getLastChild();  
@@ -161,7 +161,7 @@ public class Ai{
                 if(root.mark<=alpha)  
                     return;  
             }  
-            // max²ã  
+            // maxï¿½ï¿½  
             else{  
                 if(root.bestChild==null || root.getLastChild().mark>root.bestChild.mark){  
                     root.bestChild=root.getLastChild();  
@@ -182,7 +182,7 @@ public class Ai{
         for(int i=1;i<=size;++i){  
             for(int j=1;j<=size;++j){  
                 if(chessBoard[i][j]!=0){  
-                    // ÐÐ  
+                    // ï¿½ï¿½  
                     boolean flag1=false,flag2=false;  
                     int x=j,y=i;  
                     int cnt=1;  
@@ -196,7 +196,7 @@ public class Ai{
                         res+=chessBoard[i][j]*cnt*cnt;  
                     else if(flag1 || flag2) res+=chessBoard[i][j]*cnt*cnt/4;   
                     if(cnt>=5) res=MAXN*chessBoard[i][j];  
-                    // ÁÐ  
+                    // ï¿½ï¿½  
                     col=x;row=y;  
                     cnt=1;flag1=false;flag2=false;  
                     while(--row>0 && chessBoard[row][col]==chessBoard[y][x]) ++cnt;  
@@ -209,7 +209,7 @@ public class Ai{
                     else if(flag1 || flag2)  
                         res+=chessBoard[i][j]*cnt*cnt/4;  
                     if(cnt>=5) res=MAXN*chessBoard[i][j];  
-                    // ×ó¶Ô½ÇÏß  
+                    // ï¿½ï¿½Ô½ï¿½ï¿½ï¿½  
                     col=x;row=y;  
                     cnt=1;flag1=false;flag2=false;  
                     while(--col>0 && --row>0 && chessBoard[row][col]==chessBoard[y][x]) ++cnt;  
@@ -221,7 +221,7 @@ public class Ai{
                         res+=chessBoard[i][j]*cnt*cnt;  
                     else if(flag1 || flag2) res+=chessBoard[i][j]*cnt*cnt/4;  
                     if(cnt>=5) res=MAXN*chessBoard[i][j];  
-                    // ÓÒ¶Ô½ÇÏß  
+                    // ï¿½Ò¶Ô½ï¿½ï¿½ï¿½  
                     col=x;row=y;  
                     cnt=1;flag1=false;flag2=false;  
                     while(++row<=size && --col>0 && chessBoard[row][col]==chessBoard[y][x]) ++cnt;  
@@ -250,9 +250,9 @@ public class Ai{
         }  
     }  
   
-    // ÅÐ¶ÏÊÇ·ñÒ»·½È¡Ê¤  
+    // ï¿½Ð¶ï¿½ï¿½Ç·ï¿½Ò»ï¿½ï¿½È¡Ê¤  
     public static boolean isEnd(int x,int y){  
-        // ÅÐ¶ÏÒ»ÐÐÊÇ·ñÎå×ÓÁ¬Öé  
+        // ï¿½Ð¶ï¿½Ò»ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
         int cnt=1;  
         int col=x,row=y;  
         while(--col>0 && chessBoard[row][col]==chessBoard[y][x]) ++cnt;  
@@ -262,7 +262,7 @@ public class Ai{
             isFinished=true;  
             return true;  
         }  
-        // ÅÐ¶ÏÒ»ÁÐÊÇ·ñÎå×ÓÁ¬Öé  
+        // ï¿½Ð¶ï¿½Ò»ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
         col=x;row=y;  
         cnt=1;  
         while(--row>0 && chessBoard[row][col]==chessBoard[y][x]) ++cnt;  
@@ -272,7 +272,7 @@ public class Ai{
             isFinished=true;  
             return true;  
         }  
-        // ÅÐ¶Ï×ó¶Ô½ÇÏßÊÇ·ñÎå×ÓÁ¬Öé  
+        // ï¿½Ð¶ï¿½ï¿½ï¿½Ô½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
         col=x;row=y;  
         cnt=1;  
         while(--col>0 && --row>0 && chessBoard[row][col]==chessBoard[y][x]) ++cnt;  
@@ -282,7 +282,7 @@ public class Ai{
             isFinished=true;  
             return true;  
         }  
-        // ÅÐ¶ÏÓÒ¶Ô½ÇÏßÊÇ·ñÎå×ÓÁ¬Öé  
+        // ï¿½Ð¶ï¿½ï¿½Ò¶Ô½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
         col=x;row=y;  
         cnt=1;  
         while(++row<=size && --col>0 && chessBoard[row][col]==chessBoard[y][x]) ++cnt;  
@@ -298,7 +298,7 @@ public class Ai{
   
   
   
-// Ê÷½Úµã  
+// ï¿½ï¿½ï¿½Úµï¿½  
 class Node{  
     public Node bestChild=null;  
     public ArrayList<Node> child=new ArrayList<Node>();  
@@ -321,7 +321,7 @@ class Node{
     }  
 }  
   
-// ÊµÏÖÊó±êÊÂ¼þ½Ó¿Ú  
+// Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½Ó¿ï¿½  
 class MyMouseEvent implements MouseListener{  
     public void mouseClicked(MouseEvent e){  
         int x=round(e.getX()),y=round(e.getY());  
@@ -334,7 +334,7 @@ class MyMouseEvent implements MouseListener{
             Ai.isFinished=false;  
         }  
     }  
-    // µÃµ½Êó±êµã»÷µã¸½½üµÄÆåÅÌ¾«×¼µã  
+    // ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã¸½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾ï¿½×¼ï¿½ï¿½  
     public static int round(int x){  
         return (x%45<22)?x/45*45:x/45*45+45;  
     }  
